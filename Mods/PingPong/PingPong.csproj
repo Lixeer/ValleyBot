@@ -13,14 +13,16 @@
   
 
   <Target Name="PrintValleyBotPath" AfterTargets="Build">
+
+    <Message Text="===========================================" Importance="high" />
     <Message Text="请校验文件是否存在" Importance="high" />
     <Message Text="$(VALLEYBOT_PATH)" Importance="high" />
     <Message Text="$(VALLEYBOT_PATH)\ValleyBot.dll" Importance="high" />
+    <Message Text="===========================================" Importance="high" />
     
 
     
-    <Message Text="TargetDir $(TargetDir)*.dll" Importance="high" />
-    <Message Text="MSBDir $(MSBuildProjectDirectory)" Importance="high" />
+    
 
     <ItemGroup>
       <ModFiles Include="$(TargetDir)*.dll" />
