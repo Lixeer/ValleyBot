@@ -2,9 +2,9 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace ValleyBot.net.Service;
+
+namespace ValleyBot.Service;
 
 public class AdvancedWebSocketClient : IDisposable
 {

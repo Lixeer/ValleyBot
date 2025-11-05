@@ -16,7 +16,7 @@ namespace ValleyBot.Core.ModManager
         {
             this.localpath = Path.Combine(AppContext.BaseDirectory, "Mods");
             this.modDirList = Directory.GetDirectories(localpath);
-            Console.WriteLine(modDirList[0]);
+            
             this.Mods = new List<Mod>();
 
         }
@@ -72,6 +72,7 @@ namespace ValleyBot.Core.ModManager
         
         public event Func<MessageEventArgs, Task>? OnMessageEvent;
         public event Func<MetaEventArgs, Task>? OnMetaEvent;
+        public event Func<NoticeEventArgs, Task>? OnNoticeEvent;
         public abstract void Entry(BotApp bot);
 
         public async Task HandleEvent(MetaEvent e)
@@ -81,9 +82,15 @@ namespace ValleyBot.Core.ModManager
             await OnMetaEvent?.Invoke(new MetaEventArgs{ EventData = e });
         }
         public async Task HandleEvent(MessageEvent e)
+        {
+            if (OnMessageEvent == null) { return; }
+            await OnMessageEvent?.Invoke(new MessageEventArgs { EventData = e });
+        }
+        public async Task HandleEvent(NoticeEvent e)
         {   
-            if (OnMessageEvent == null){return;}
-            await OnMessageEvent?.Invoke(new MessageEventArgs{ EventData = e });
+            Console.WriteLine($"收到通知: {e.SubType}");
+            if (OnNoticeEvent == null){return;}
+            await OnNoticeEvent?.Invoke(new NoticeEventArgs{ EventData = e });
         }
         
     }

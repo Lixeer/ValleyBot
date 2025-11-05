@@ -4,7 +4,7 @@ using System.Text.Json;
 using Onebot.Event;
 using ValleyBot.Core.ModManager;
 
-using ValleyBot.net.Service;
+using ValleyBot.Service;
 
 //temp
 using System.Collections.Generic;
@@ -23,12 +23,15 @@ public class BotApp
     public AdvancedWebSocketClient ActionService;
     Config<BootConfig> _config;
     ModLoader modLoader;
+    
+    public Helper helper;
     public BotApp()
-    {
-        //mods.Add(new MyMod(this));
+    {   
+        this.helper = new Helper();
+        
         this.modLoader = new ModLoader();
         modLoader.LoadMods(this);
-        //modLoader.Mods.Add(new MyMod(this));
+        
 
         _config = new Config<BootConfig>();
         Console.WriteLine(_config.Item.Uri);
@@ -58,6 +61,7 @@ public class BotApp
             var preEvent = JsonSerializer.Deserialize<IEvent>(e);
             MetaEvent _metae = null;
             MessageEvent _messagee = null;
+            NoticeEvent _noticee = null;
             IEvent fEvent;
             switch (preEvent.PostType)
             {
@@ -67,6 +71,9 @@ public class BotApp
                     break;
                 case "message":
                     _messagee = JsonSerializer.Deserialize<MessageEvent>(e);
+                    break;
+                case "notice":
+                    _noticee = JsonSerializer.Deserialize<NoticeEvent>(e);
                     break;
                 default:
                     fEvent = JsonSerializer.Deserialize<IEvent>(e);
@@ -82,6 +89,10 @@ public class BotApp
                 else if (_messagee != null)
                 {
                     await mod.HandleEvent(_messagee);
+                }
+                else if (_noticee != null)
+                {
+                    await mod.HandleEvent(_noticee);
                 }
             }
 
