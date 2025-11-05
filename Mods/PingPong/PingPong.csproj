@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- <ModOutPutPath>$(VALLEYBOT_PATH)\Mods\</ModOutPutPath>-->
+
+    <HostExecutable>$(VALLEYBOT_PATH)\ValleyBot.exe</HostExecutable>
+
+  </PropertyGroup>
+  
+
+  <Target Name="PrintValleyBotPath" AfterTargets="Build">
+    <Message Text="请校验文件是否存在" Importance="high" />
+    <Message Text="$(VALLEYBOT_PATH)" Importance="high" />
+    <Message Text="$(VALLEYBOT_PATH)\ValleyBot.dll" Importance="high" />
+    
+
+    
+    <Message Text="TargetDir $(TargetDir)*.dll" Importance="high" />
+    <Message Text="MSBDir $(MSBuildProjectDirectory)" Importance="high" />
+
+    <ItemGroup>
+      <ModFiles Include="$(TargetDir)*.dll" />
+      <ModFiles Include="$(MSBuildProjectDirectory)\manifest.json" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(VALLEYBOT_PATH)\Mods\$(ProjectName)" />
+    
+    
+    <Copy SourceFiles="@(ModFiles)" 
+          DestinationFolder="$(VALLEYBOT_PATH)\Mods\$(ProjectName)\" 
+          SkipUnchangedFiles="false">
+      <Output TaskParameter="CopiedFiles" ItemName="SuccessfullyCopiedFiles"/>
+    </Copy>
+
+
+    <Exec Command="$(VALLEYBOT_PATH)\ValleyBot.exe"
+          IgnoreExitCode="false"
+          ContinueOnError="false" />
+    </Target>
+    <ItemGroup>
+        
+        <Reference Include="$(VALLEYBOT_PATH)\ValleyBot.dll" />
+        
+    </ItemGroup>
+
+    
+
+</Project>

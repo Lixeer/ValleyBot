@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "mod_name": "PingPong",
+    "description": "PingPong",
+    "author": "VVLLL",
+    "entry_dll": "PingPong.dll"
+}

@@ -2,4 +2,6 @@
 */obj/*
 idea/*
 codetest/*
-Mods/*
+Mods/*/bin/*
+Mods/*/obj/*
+Mods/*/.idea/*
