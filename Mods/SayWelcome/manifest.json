@@ -1,0 +1,7 @@
+{
+    "version": "1.0.0",
+    "mod_name": "SayWelcome",
+    "description": "say welcome when new user join",
+    "author": "Lixeer",
+    "entry_dll": "SayWelcome.dll"
+}
